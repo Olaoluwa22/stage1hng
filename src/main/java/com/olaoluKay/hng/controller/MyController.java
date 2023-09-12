@@ -1,12 +1,9 @@
 package com.olaoluKay.hng.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.TimeZone;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,24 +15,24 @@ public class MyController {
 	@GetMapping("/api")
 	  public MyInfo getInfo(@RequestParam(name="slackName") String slackName,
 			                     @RequestParam(name="track")  String track) {
-			
-	   SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
-	   dayFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-	   String current_day = dayFormat.format(new Date());
+		  
+	 Instant current_UTCInstant = Instant.now();
+	 ZonedDateTime utc_DateTime = ZonedDateTime.ofInstant(current_UTCInstant, ZoneId.of("UTC"));
+	 DateTimeFormatter date_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z' EEEEE");
+	 String current_day = utc_DateTime.format(date_formatter);
 	   
-	  // SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM:SS");
-	   //timeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-	   //String utc_time = timeFormat.format(new Date());
+
+		  
 	   Instant currentUTCInstant = Instant.now();
-       ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(currentUTCInstant, ZoneId.of("UTC"));
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-       String utc_time = utcDateTime.format(formatter);
+           ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(currentUTCInstant, ZoneId.of("UTC"));
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+           String utc_time = utcDateTime.format(formatter);
 
 	   
-	   String githubFileUrl = "https://github.com/your-username/your-repo/blob/main/path/to/your-file.ext";
-     String githubSourceUrl = "https://github.com/your-username/your-repo";
+	   String githubFileUrl = "https://github.com/Olaoluwa22/stage1hng/blob/master/src/main/java/com/olaoluKay/hng/controller/MyController.java";
+           String githubSourceUrl = "https://github.com/Olaoluwa22/stage1hng";
      
-     MyInfo myInfo = new MyInfo();
+           MyInfo myInfo = new MyInfo();
      
      myInfo.setSlack_Name("Olaoluwa Kayode");
      myInfo.setCurrent_Day(current_day);
